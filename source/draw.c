@@ -39,44 +39,43 @@ void clear_screen(u8* fb, u32 rgb) {
 
 void load_animation(u32 max) {
 
-	// Load from sdmc:/anim/(rand_animation)/{anim, bottom_anim, config}
+	// Load from sdmc:/anim/(Button or default)/{anim, bottom_anim, config}
 	char *config_fname  = "/anim/0/config";
 	char *top_fname     = "/anim/0/anim";
 	char *bottom_fname  = "/anim/0/bottom_anim";
+	char pad[1]	    = "0";
+	
+	// If more than one button is pressed the first button in the register is prioritized, order by proiority is A, B, X, Y
+	if (HID_PAD & BUTTON_Y) { 
 
-	if (HID_PAD & BUTTON_Y) {
-	
-	config_fname[6]  = 'y';
-	top_fname[6]  = 'y';
-	bottom_fname[6]  = 'y';
-	
+	pad[0] = 'y';
+
 	}
-
+	
 	if (HID_PAD & BUTTON_X) {
-	
-	config_fname[6]  = 'x';
-	top_fname[6]  = 'x';
-	bottom_fname[6]  = 'x';
-	
-	}
 
+	pad[0] = 'x';
+
+	}
+	
 	if (HID_PAD & BUTTON_A) {
-	
-	config_fname[6]  = 'a';
-	top_fname[6]  = 'a';
-	bottom_fname[6]  = 'a';
-	
-	}
 
+	pad[0] = 'a';
+
+	}
+	
 	if (HID_PAD & BUTTON_B) {
 	
-	config_fname[6]  = 'b';
-	top_fname[6]  = 'b';
-	bottom_fname[6]  = 'b';
-	
+	pad[0] = 'b';
+
 	}
 
-	config_size			= file_exists(config_fname); // Get config file size (mostly to check whether it exists, because rn it only reads 1 byte)
+	config_fname[6] = pad[0];
+	top_fname[6] = pad[0];
+	bottom_fname[6] = pad[0];
+	
+
+	config_size		= file_exists(config_fname); // Get config file size (mostly to check whether it exists, because rn it only reads 1 byte)
 	top_anim_size 		= file_size(top_fname);      // Get top screen animation size
 	bottom_anim_size 	= file_size(bottom_fname);   // Get bottom screen animation size
 
