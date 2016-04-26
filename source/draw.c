@@ -39,16 +39,42 @@ void clear_screen(u8* fb, u32 rgb) {
 
 void load_animation(u32 max) {
 
-	u32 rand_animation = REG_PRNG % (max); // Dice roll, with possible values between 0 and (maxAnimations-1)
-
 	// Load from sdmc:/anim/(rand_animation)/{anim, bottom_anim, config}
 	char *config_fname  = "/anim/0/config";
 	char *top_fname     = "/anim/0/anim";
 	char *bottom_fname  = "/anim/0/bottom_anim";
 
-	config_fname[6] 	= rand_animation + '0'; // Yes, I'm directly modifying the '0' in the string
-	top_fname[6]   		= rand_animation + '0'; // tfw no sprintf
-	bottom_fname[6] 	= rand_animation + '0'; // And strcat just craps itself
+	if (HID_PAD & BUTTON_Y) {
+	
+	config_fname[6]  = 'y';
+	top_fname[6]  = 'y';
+	bottom_fname[6]  = 'y';
+	
+	}
+
+	if (HID_PAD & BUTTON_X) {
+	
+	config_fname[6]  = 'x';
+	top_fname[6]  = 'x';
+	bottom_fname[6]  = 'x';
+	
+	}
+
+	if (HID_PAD & BUTTON_A) {
+	
+	config_fname[6]  = 'a';
+	top_fname[6]  = 'a';
+	bottom_fname[6]  = 'a';
+	
+	}
+
+	if (HID_PAD & BUTTON_B) {
+	
+	config_fname[6]  = 'b';
+	top_fname[6]  = 'b';
+	bottom_fname[6]  = 'b';
+	
+	}
 
 	config_size			= file_exists(config_fname); // Get config file size (mostly to check whether it exists, because rn it only reads 1 byte)
 	top_anim_size 		= file_size(top_fname);      // Get top screen animation size
