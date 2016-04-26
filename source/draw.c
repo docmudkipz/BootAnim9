@@ -45,7 +45,7 @@ void load_animation(u32 max) {
 	char *bottom_fname  = "/anim/0/bottom_anim";
 	char pad[1]	    = "0";
 	
-	// If more than one button is pressed the first button in the register is prioritized, order by proiority is A, B, X, Y
+	// If more than one button is pressed the default animation is loaded
 	if (HID_PAD & BUTTON_Y) { 
 
 	pad[0] = 'y';
