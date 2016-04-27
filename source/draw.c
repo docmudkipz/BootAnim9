@@ -43,36 +43,24 @@ void load_animation(u32 max) {
 	char *config_fname  = "/anim/0/config";
 	char *top_fname     = "/anim/0/anim";
 	char *bottom_fname  = "/anim/0/bottom_anim";
-	char pad[1]	    = "0";
+	char pad	    = '0';
 	
 	// If more than one button is pressed the default animation is loaded
-	if (HID_PAD & BUTTON_Y) { 
-
-	pad[0] = 'y';
-
-	}
+	if (HID_PAD & BUTTON_Y)
+		pad = 'y';
 	
-	if (HID_PAD & BUTTON_X) {
-
-	pad[0] = 'x';
-
-	}
+	if (HID_PAD & BUTTON_X)
+		pad = 'x';
 	
-	if (HID_PAD & BUTTON_A) {
-
-	pad[0] = 'a';
-
-	}
+	if (HID_PAD & BUTTON_A)
+		pad = 'a';
 	
-	if (HID_PAD & BUTTON_B) {
-	
-	pad[0] = 'b';
+	if (HID_PAD & BUTTON_B) 
+		pad = 'b';
 
-	}
-
-	config_fname[6] = pad[0];
-	top_fname[6] = pad[0];
-	bottom_fname[6] = pad[0];
+	config_fname[6] = pad;
+	top_fname[6] = pad;
+	bottom_fname[6] = pad;
 	
 
 	config_size		= file_exists(config_fname); // Get config file size (mostly to check whether it exists, because rn it only reads 1 byte)
